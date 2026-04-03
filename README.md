@@ -5,29 +5,47 @@
 
 ## 中文
 
-`thesis-docx` 是一个用于毕业论文 / 学位论文文档处理的开源工具仓库。
+`thesis-docx` 是一个面向毕业论文 / 学位论文场景的通用 skill。
 
-它的重点不是绑定某一个 AI 平台，而是把论文处理里那些可复用、可脚本化、
-又容易出错的部分沉淀成一套可以直接调用的工具和规范。
-
-它可以被：
-
-- Claude Code 使用
-- Cursor / Windsurf / Roo Code 等可执行本地命令的工具使用
-- 任何能读取仓库文件并调用 PowerShell 脚本的自动化流程使用
-
-仓库里的核心内容是：
-
-- `scripts/`：可直接执行的脚本
-- `references/`：可复用的论文处理规则
-- `SKILL.md`：给支持 skill 机制的工具使用的说明入口
+它用于让 AI 在处理论文文档时遵循统一规则，而不是随意生成内容或随意改格式。
 
 ### 功能
 
-- 检查本机是否安装了桌面版 Microsoft Word，以及是否支持 COM/DOM 自动化
-- 批量统一论文正文、标题、图题注、表题注等 Word 样式
-- 将 Mermaid 源文件渲染成适合论文插图使用的 SVG、PNG 或 PDF
-- 约束图内容必须基于真实材料，避免虚构结构
+- 生成、补充、改写论文内容
+- 按用户给定模板或格式要求修订 Word 文档
+- 统一正文、标题、图题注、表题注等样式
+- 在论文中生成基于真实材料的 Mermaid 架构图、流程图、E-R 图等
+- 在论文中使用 LaTeX 风格的代码排版
+
+### 核心规则
+
+- 优先检查桌面版 Microsoft Word 和 COM/DOM 自动化能力
+- 如果没有 Word 或无法自动化，不强行执行高保真排版
+- 用户给了格式要求时，必须严格遵守
+- 图和代码内容必须基于用户提供的真实资料，不能虚构
+- 仓库内置脚本供 AI 按需调用，通常不需要用户手动运行
+
+### 适用对象
+
+适用于支持以下能力的 AI 工具：
+
+- 读取仓库文件
+- 读取 `SKILL.md`
+- 在本地执行脚本或命令
+
+### 安装
+
+1. 下载或 clone 此仓库
+2. 保持整个仓库文件夹完整
+3. 将整个文件夹复制到你希望 AI 使用的位置
+
+示例：
+
+```powershell
+git clone https://github.com/the-shy123456/thesis-docx.git
+```
+
+之后直接复制整个 `thesis-docx` 文件夹即可，不需要拆文件。
 
 ### 仓库结构
 
@@ -41,89 +59,12 @@
 └── LICENSE
 ```
 
-### 环境要求
+### 目录说明
 
-推荐环境：
-
-- Windows
-- 桌面版 Microsoft Word
-- PowerShell
-- Node.js
-- Python 3
-
-其中：
-
-- `normalize_word_styles.ps1` 依赖 Word COM 自动化
-- `render_mermaid_figure.ps1` 依赖 `mmdc` 或 `npx @mermaid-js/mermaid-cli`
-
-### 快速开始
-
-1. 把仓库 clone 或下载到任意位置
-2. 直接运行里面的脚本，或者把整个仓库文件夹复制到你需要的目录
-3. 如果某个 AI 工具支持 skills / prompts / repo tools，也可以直接让它读取这个仓库
-
-例如先下载到本地：
-
-```powershell
-git clone https://github.com/the-shy123456/thesis-docx.git
-```
-
-然后你可以：
-
-- 直接在这个目录里运行脚本
-- 把整个 `thesis-docx` 文件夹复制到其他工作区
-- 把整个 `thesis-docx` 文件夹复制到支持 skill 目录机制的位置
-
-### 直接运行脚本
-
-检查 Word 自动化环境：
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\check_word_com.ps1 -Json
-```
-
-统一论文样式：
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\normalize_word_styles.ps1 `
-  -InputPath C:\path\to\draft.docx `
-  -OutputPath C:\path\to\draft.normalized.docx
-```
-
-渲染 Mermaid 插图：
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\render_mermaid_figure.ps1 `
-  -InputPath .\examples\architecture.sample.mmd `
-  -OutputPath C:\path\to\architecture.svg `
-  -Theme base `
-  -Width 1800 `
-  -Height 1200 `
-  -Scale 2
-```
-
-如果学校模板有自定义样式名，可基于这个示例配置调整：
-
-```text
-examples/word-style-config.sample.json
-```
-
-### 可选：作为 skill 使用
-
-如果你想把它接入支持 skill 目录机制的工具，最简单的方式不是拆文件，而是直接复制整个仓库目录到目标工具的 skill 目录。
-
-例如：
-
-```text
-<your-skill-directory>\thesis-docx
-```
-
-也就是说，用户只需要：
-
-1. 下载或 clone 这个仓库
-2. 把整个仓库文件夹复制到目标位置
-
-就可以了。
+- `SKILL.md`：skill 主说明
+- `scripts/`：供 AI 调用的辅助脚本
+- `references/`：补充规则与说明
+- `examples/`：示例输入与样式配置
 
 ### License
 
@@ -131,33 +72,50 @@ MIT
 
 ## English
 
-`thesis-docx` is an open-source repository for thesis and dissertation document
-workflows.
+`thesis-docx` is a general-purpose skill for thesis and dissertation workflows.
 
-The goal is not to bind the project to a single AI platform. Instead, it
-packages the reusable, scriptable, and error-prone parts of thesis processing
-into a toolkit that can be called directly.
-
-It can be used by:
-
-- Claude Code
-- Cursor / Windsurf / Roo Code
-- any automation pipeline that can read repository files and run local
-  PowerShell scripts
-
-The core parts of the repository are:
-
-- `scripts/`: directly executable scripts
-- `references/`: reusable thesis workflow rules
-- `SKILL.md`: an entry point for tools that support skill-style workflows
+It is designed to help AI follow consistent rules when generating or revising
+academic documents, instead of producing content or formatting arbitrarily.
 
 ### Features
 
-- checks whether desktop Microsoft Word and COM/DOM automation are available
-- batch normalizes body text, headings, figure captions, and table captions
-- renders Mermaid source into SVG, PNG, or PDF assets for thesis figures
-- requires figure content to be grounded in real project material instead of
-  fabricated structure
+- generate, extend, and revise thesis content
+- revise Word documents under user-provided formatting requirements
+- normalize body text, headings, figure captions, and table captions
+- generate Mermaid architecture diagrams, flowcharts, and E-R diagrams from
+  real source material
+- use LaTeX-style code formatting in thesis documents
+
+### Core Rules
+
+- check desktop Microsoft Word and COM/DOM automation first
+- do not force high-fidelity formatting when Word automation is unavailable
+- follow user-provided formatting requirements strictly
+- never fabricate figures or code content without real source material
+- bundled scripts are internal helpers for AI tools and usually do not need to
+  be run manually by end users
+
+### Intended For
+
+This skill fits AI tools that can:
+
+- read repository files
+- read `SKILL.md`
+- run local scripts or commands
+
+### Installation
+
+1. Download or clone this repository
+2. Keep the whole repository folder intact
+3. Copy the entire folder to the location where you want your AI tool to use it
+
+Example:
+
+```powershell
+git clone https://github.com/the-shy123456/thesis-docx.git
+```
+
+Then copy the whole `thesis-docx` folder as-is. Do not split the files.
 
 ### Repository Layout
 
@@ -171,92 +129,12 @@ The core parts of the repository are:
 └── LICENSE
 ```
 
-### Requirements
+### Directory Guide
 
-Recommended environment:
-
-- Windows
-- desktop Microsoft Word
-- PowerShell
-- Node.js
-- Python 3
-
-Notes:
-
-- `normalize_word_styles.ps1` depends on Word COM automation
-- `render_mermaid_figure.ps1` depends on `mmdc` or `npx @mermaid-js/mermaid-cli`
-
-### Quick Start
-
-1. Clone or download the repository anywhere
-2. Run the scripts directly, or copy the whole repository folder where you want
-   to use it
-3. If your AI tool supports skills, prompts, or repo-based tooling, point it to
-   this repository directly
-
-Clone example:
-
-```powershell
-git clone https://github.com/the-shy123456/thesis-docx.git
-```
-
-Then you can:
-
-- run the scripts directly in this repository
-- copy the whole `thesis-docx` folder into another workspace
-- copy the whole `thesis-docx` folder into any location that supports a
-  skill-directory workflow
-
-### Run the Scripts Directly
-
-Check Word automation:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\check_word_com.ps1 -Json
-```
-
-Normalize thesis styles:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\normalize_word_styles.ps1 `
-  -InputPath C:\path\to\draft.docx `
-  -OutputPath C:\path\to\draft.normalized.docx
-```
-
-Render a Mermaid figure:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\render_mermaid_figure.ps1 `
-  -InputPath .\examples\architecture.sample.mmd `
-  -OutputPath C:\path\to\architecture.svg `
-  -Theme base `
-  -Width 1800 `
-  -Height 1200 `
-  -Scale 2
-```
-
-If your school template uses custom style names, start from:
-
-```text
-examples/word-style-config.sample.json
-```
-
-### Optional: use as a skill
-
-If you want to plug it into tools that support skill-directory workflows, copy
-the whole repository folder directly into the target skill directory instead of
-splitting files.
-
-Example:
-
-```text
-<your-skill-directory>\thesis-docx
-```
-
-In other words, users only need to:
-
-1. download or clone this repository
-2. copy the entire repository folder to the target location
+- `SKILL.md`: main skill instructions
+- `scripts/`: helper scripts invoked by AI when needed
+- `references/`: supporting rules and reference material
+- `examples/`: sample inputs and style configuration examples
 
 ### License
 
