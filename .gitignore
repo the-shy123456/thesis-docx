@@ -8,7 +8,6 @@ tmp-*.mmd
 tmp-*.pdf
 tmp-*.png
 **/tmp-*.docx
-thesis-docx-assistant/
 
 # Python
 __pycache__/
