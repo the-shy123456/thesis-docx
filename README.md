@@ -12,7 +12,6 @@
 
 它可以被：
 
-- Codex 使用
 - Claude Code 使用
 - Cursor / Windsurf / Roo Code 等可执行本地命令的工具使用
 - 任何能读取仓库文件并调用 PowerShell 脚本的自动化流程使用
@@ -111,12 +110,12 @@ examples/word-style-config.sample.json
 
 ### 可选：作为 skill 使用
 
-如果你想把它接入支持 skill 目录机制的工具，最简单的方式不是拆文件，而是直接复制整个仓库目录。
+如果你想把它接入支持 skill 目录机制的工具，最简单的方式不是拆文件，而是直接复制整个仓库目录到目标工具的 skill 目录。
 
-例如在 Codex 中，可以放到：
+例如：
 
 ```text
-%USERPROFILE%\.codex\skills\thesis-docx
+<your-skill-directory>\thesis-docx
 ```
 
 也就是说，用户只需要：
@@ -141,7 +140,6 @@ into a toolkit that can be called directly.
 
 It can be used by:
 
-- Codex
 - Claude Code
 - Cursor / Windsurf / Roo Code
 - any automation pipeline that can read repository files and run local
@@ -246,12 +244,13 @@ examples/word-style-config.sample.json
 ### Optional: use as a skill
 
 If you want to plug it into tools that support skill-directory workflows, copy
-the whole repository folder directly instead of splitting files.
+the whole repository folder directly into the target skill directory instead of
+splitting files.
 
-For example, in Codex you can place it at:
+Example:
 
 ```text
-%USERPROFILE%\.codex\skills\thesis-docx
+<your-skill-directory>\thesis-docx
 ```
 
 In other words, users only need to:
