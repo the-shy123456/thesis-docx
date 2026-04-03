@@ -1,7 +1,0 @@
-interface:
-  display_name: "Thesis DOCX"
-  short_description: "Thesis Word drafting, revision, and formatting control"
-  default_prompt: "Use $thesis-docx to revise or generate a thesis Word document with strict academic formatting and evidence-based figures."
-
-policy:
-  allow_implicit_invocation: true

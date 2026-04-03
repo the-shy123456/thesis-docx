@@ -1,40 +1,40 @@
 # thesis-docx
 
+[![中文](https://img.shields.io/badge/中文-说明-1677ff)](#中文)
+[![English](https://img.shields.io/badge/English-Docs-111827)](#english)
+
 ## 中文
 
-`thesis-docx` 是一个面向毕业论文 / 学位论文场景的开源工具项目。
-它的核心目标很简单：把论文文档处理中那些重复、易错、又很依赖格式一致性的工作沉淀下来。
+`thesis-docx` 是一个用于毕业论文 / 学位论文文档处理的开源工具仓库。
 
-当前项目主要提供三类能力：
+它的重点不是绑定某一个 AI 平台，而是把论文处理里那些可复用、可脚本化、
+又容易出错的部分沉淀成一套可以直接调用的工具和规范。
 
-- 论文 Word 文档的样式归一化
-- 基于真实材料的 Mermaid 论文插图渲染
-- 面向 Codex 的 skill 接入
+它可以被：
 
-这个仓库 **不只用于 Codex**。
+- Codex 使用
+- Claude Code 使用
+- Cursor / Windsurf / Roo Code 等可执行本地命令的工具使用
+- 任何能读取仓库文件并调用 PowerShell 脚本的自动化流程使用
 
-- `scripts/` 里的脚本可以独立运行，其他 AI、编辑器、自动化平台也能调用
-- `references/` 里的规范说明也可以单独复用
-- `SKILL.md` 和 `agents/openai.yaml` 只是 Codex 的接入层
+仓库里的核心内容是：
 
-也就是说，这个项目可以同时被当作：
-
-1. 一个通用的论文文档处理脚本仓库
-2. 一个 Codex skill
+- `scripts/`：可直接执行的脚本
+- `references/`：可复用的论文处理规则
+- `SKILL.md`：给支持 skill 机制的工具使用的说明入口
 
 ### 功能
 
-- 检查本机是否存在桌面版 Microsoft Word，以及是否可用 COM/DOM 自动化
-- 批量统一正文、标题、图题注、表题注等 Word 样式
-- 将 Mermaid 源文件渲染为适合论文插图使用的 SVG、PNG 或 PDF
-- 强制要求图内容来自真实代码、表结构、接口文档、项目文档或论文材料，避免虚构
+- 检查本机是否安装了桌面版 Microsoft Word，以及是否支持 COM/DOM 自动化
+- 批量统一论文正文、标题、图题注、表题注等 Word 样式
+- 将 Mermaid 源文件渲染成适合论文插图使用的 SVG、PNG 或 PDF
+- 约束图内容必须基于真实材料，避免虚构结构
 
 ### 仓库结构
 
 ```text
 .
 ├── SKILL.md
-├── agents/
 ├── scripts/
 ├── references/
 ├── examples/
@@ -42,13 +42,7 @@
 └── LICENSE
 ```
 
-### 主要脚本
-
-- `scripts/check_word_com.ps1`
-- `scripts/normalize_word_styles.ps1`
-- `scripts/render_mermaid_figure.ps1`
-
-### 运行要求
+### 环境要求
 
 推荐环境：
 
@@ -58,13 +52,30 @@
 - Node.js
 - Python 3
 
-校验 skill 时需要：
+其中：
+
+- `normalize_word_styles.ps1` 依赖 Word COM 自动化
+- `render_mermaid_figure.ps1` 依赖 `mmdc` 或 `npx @mermaid-js/mermaid-cli`
+
+### 快速开始
+
+1. 把仓库 clone 或下载到任意位置
+2. 直接运行里面的脚本，或者把整个仓库文件夹复制到你需要的目录
+3. 如果某个 AI 工具支持 skills / prompts / repo tools，也可以直接让它读取这个仓库
+
+例如先下载到本地：
 
 ```powershell
-python -m pip install pyyaml
+git clone https://github.com/the-shy123456/thesis-docx.git
 ```
 
-### 直接使用脚本
+然后你可以：
+
+- 直接在这个目录里运行脚本
+- 把整个 `thesis-docx` 文件夹复制到其他工作区
+- 把整个 `thesis-docx` 文件夹复制到支持 skill 目录机制的位置
+
+### 直接运行脚本
 
 检查 Word 自动化环境：
 
@@ -98,25 +109,22 @@ powershell -ExecutionPolicy Bypass -File .\scripts\render_mermaid_figure.ps1 `
 examples/word-style-config.sample.json
 ```
 
-### 作为 Codex skill 使用
+### 可选：作为 skill 使用
 
-如果你希望 Codex 自动发现它，把仓库放到：
+如果你想把它接入支持 skill 目录机制的工具，最简单的方式不是拆文件，而是直接复制整个仓库目录。
+
+例如在 Codex 中，可以放到：
 
 ```text
 %USERPROFILE%\.codex\skills\thesis-docx
 ```
 
-或直接 clone：
+也就是说，用户只需要：
 
-```powershell
-git clone https://github.com/the-shy123456/thesis-docx.git $env:USERPROFILE\.codex\skills\thesis-docx
-```
+1. 下载或 clone 这个仓库
+2. 把整个仓库文件夹复制到目标位置
 
-### 校验
-
-```powershell
-python C:\Users\85280\.codex\skills\.system\skill-creator\scripts\quick_validate.py .
-```
+就可以了。
 
 ### License
 
@@ -124,54 +132,46 @@ MIT
 
 ## English
 
-`thesis-docx` is an open-source toolkit for thesis and dissertation document
-workflows. Its goal is to package the repetitive and format-sensitive parts of
-thesis editing into reusable assets.
+`thesis-docx` is an open-source repository for thesis and dissertation document
+workflows.
 
-The project currently provides three kinds of functionality:
+The goal is not to bind the project to a single AI platform. Instead, it
+packages the reusable, scriptable, and error-prone parts of thesis processing
+into a toolkit that can be called directly.
 
-- Word style normalization for thesis documents
-- Mermaid figure rendering based on real source material
-- Codex skill integration
+It can be used by:
 
-This repository is **not limited to Codex**.
+- Codex
+- Claude Code
+- Cursor / Windsurf / Roo Code
+- any automation pipeline that can read repository files and run local
+  PowerShell scripts
 
-- the scripts in `scripts/` can be executed directly from other AI tools,
-  editors, or automation platforms
-- the documents in `references/` can be reused independently
-- `SKILL.md` and `agents/openai.yaml` are only the Codex integration layer
+The core parts of the repository are:
 
-So the repository can be used both as:
-
-1. a general-purpose thesis document automation toolkit
-2. a Codex skill
+- `scripts/`: directly executable scripts
+- `references/`: reusable thesis workflow rules
+- `SKILL.md`: an entry point for tools that support skill-style workflows
 
 ### Features
 
 - checks whether desktop Microsoft Word and COM/DOM automation are available
 - batch normalizes body text, headings, figure captions, and table captions
 - renders Mermaid source into SVG, PNG, or PDF assets for thesis figures
-- requires figure content to be grounded in real code, schema, API docs,
-  project docs, or thesis material
+- requires figure content to be grounded in real project material instead of
+  fabricated structure
 
 ### Repository Layout
 
 ```text
 .
 ├── SKILL.md
-├── agents/
 ├── scripts/
 ├── references/
 ├── examples/
 ├── README.md
 └── LICENSE
 ```
-
-### Main Scripts
-
-- `scripts/check_word_com.ps1`
-- `scripts/normalize_word_styles.ps1`
-- `scripts/render_mermaid_figure.ps1`
 
 ### Requirements
 
@@ -183,13 +183,33 @@ Recommended environment:
 - Node.js
 - Python 3
 
-For skill validation:
+Notes:
+
+- `normalize_word_styles.ps1` depends on Word COM automation
+- `render_mermaid_figure.ps1` depends on `mmdc` or `npx @mermaid-js/mermaid-cli`
+
+### Quick Start
+
+1. Clone or download the repository anywhere
+2. Run the scripts directly, or copy the whole repository folder where you want
+   to use it
+3. If your AI tool supports skills, prompts, or repo-based tooling, point it to
+   this repository directly
+
+Clone example:
 
 ```powershell
-python -m pip install pyyaml
+git clone https://github.com/the-shy123456/thesis-docx.git
 ```
 
-### Use the Scripts Directly
+Then you can:
+
+- run the scripts directly in this repository
+- copy the whole `thesis-docx` folder into another workspace
+- copy the whole `thesis-docx` folder into any location that supports a
+  skill-directory workflow
+
+### Run the Scripts Directly
 
 Check Word automation:
 
@@ -223,25 +243,21 @@ If your school template uses custom style names, start from:
 examples/word-style-config.sample.json
 ```
 
-### Use as a Codex Skill
+### Optional: use as a skill
 
-If you want Codex to discover the skill automatically, place the repository at:
+If you want to plug it into tools that support skill-directory workflows, copy
+the whole repository folder directly instead of splitting files.
+
+For example, in Codex you can place it at:
 
 ```text
 %USERPROFILE%\.codex\skills\thesis-docx
 ```
 
-or clone it directly:
+In other words, users only need to:
 
-```powershell
-git clone https://github.com/the-shy123456/thesis-docx.git $env:USERPROFILE\.codex\skills\thesis-docx
-```
-
-### Validate
-
-```powershell
-python C:\Users\85280\.codex\skills\.system\skill-creator\scripts\quick_validate.py .
-```
+1. download or clone this repository
+2. copy the entire repository folder to the target location
 
 ### License
 
