@@ -1,4 +1,4 @@
-# thesis-docx
+# thesis-docx.skill
 
 [![License](https://img.shields.io/badge/license-MIT-16a34a)](./LICENSE)
 [![Word](https://img.shields.io/badge/Microsoft_Word-Recommended-185ABD)](#运行前提)
