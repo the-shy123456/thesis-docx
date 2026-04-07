@@ -6,6 +6,8 @@ param(
 
     [string]$ConfigPath,
 
+    [switch]$AuditOnly,
+
     [switch]$InPlace,
 
     [switch]$Visible
@@ -402,6 +404,7 @@ $stats = @{
     FigureCaption = 0
     TableCaption = 0
 }
+$previewChanges = New-Object System.Collections.Generic.List[object]
 
 try {
     $word = New-Object -ComObject Word.Application
@@ -428,24 +431,56 @@ try {
             continue
         }
 
-        $paragraph.Range.Style = $styles[$kind]
-        $stats[$kind]++
+        $targetStyle = $styles[$kind]
+        $targetStyleName = ""
+        try {
+            $targetStyleName = [string]$targetStyle.NameLocal
+        }
+        catch {
+            try {
+                $targetStyleName = [string]$targetStyle.Name
+            }
+            catch {
+                $targetStyleName = $kind
+            }
+        }
+
+        if ($currentStyleName -ne $targetStyleName) {
+            $previewChanges.Add([pscustomobject]@{
+                kind = $kind
+                fromStyle = $currentStyleName
+                toStyle = $targetStyleName
+                text = if ($text.Length -gt 80) { $text.Substring(0, 80) } else { $text }
+            }) | Out-Null
+        }
+
+        if (-not $AuditOnly) {
+            $paragraph.Range.Style = $targetStyle
+            $stats[$kind]++
+        }
     }
 
-    if ($InPlace) {
-        $document.Save()
+    if ($AuditOnly) {
         $finalPath = $resolvedInput
     }
     else {
-        $resolvedOutput = [System.IO.Path]::GetFullPath($OutputPath)
-        $document.SaveAs([ref]$resolvedOutput)
-        $finalPath = $resolvedOutput
+        if ($InPlace) {
+            $document.Save()
+            $finalPath = $resolvedInput
+        }
+        else {
+            $resolvedOutput = [System.IO.Path]::GetFullPath($OutputPath)
+            $document.SaveAs([ref]$resolvedOutput)
+            $finalPath = $resolvedOutput
+        }
     }
 
     [pscustomobject]@{
         input = $resolvedInput
         output = $finalPath
+        auditOnly = [bool]$AuditOnly
         stats = [pscustomobject]$stats
+        previewChanges = $previewChanges
     } | ConvertTo-Json -Depth 5
 }
 finally {

@@ -31,16 +31,38 @@
 ## 4. Editing Order
 
 1. Read the user requirements and current document structure.
-2. Inspect style names, fonts, spacing, indentation, and page-break behavior.
-3. Map target styles to document styles.
-4. Normalize body text, headings, captions, and references.
-5. Then fix page numbers, table of contents, sections, references, and figure
+2. Separate formatting scope into:
+   - school-explicit requirements
+   - user-explicit house rules
+   - unspecified regions that must be preserved
+3. Inspect style names, style IDs, fonts, spacing, indentation, numbering,
+   section settings, and page-break behavior.
+4. Map target styles to document styles.
+5. Normalize only the parts that are justified by the rules.
+6. Then fix page numbers, table of contents, sections, references, and figure
    numbering.
-6. Finish with a manual review for overflow, orphan lines, and figure/table
-   page breaks.
+7. Export to PDF from Word and review every page.
+8. Only after the PDF review passes, describe the task as complete.
+
+## 4.1 Hidden Word Checks
+
+When the visual result contradicts the style readout, inspect:
+
+- `firstLine`
+- `firstLineChars`
+- direct paragraph `w:ind`
+- numbering indentation
+- `titlePg`
+- `differentFirstPageHeaderFooter`
+- REF field display text
+- direct run formatting
+
+Do not assume `python-docx` style inspection is enough for thesis work.
 
 ## 5. Do Not Do This
 
 - Do not mix heavy direct formatting with style-driven formatting.
 - Do not invent school rules when the template evidence is missing.
 - Do not treat WPS rendering as the final Word result.
+- Do not globally normalize the entire document before finishing a full audit.
+- Do not claim the thesis is fully checked before page-level PDF review.
