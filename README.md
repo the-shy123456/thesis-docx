@@ -23,6 +23,7 @@
 - 修复目录、页码、分节、交叉引用、图表编号
 - 生成基于真实材料的 Mermaid 图
 - 生成适合论文使用的代码片段或伪代码
+- 控制论文口吻，避免把 AI 工作过程或元话语写进正文
 - 审计 OOXML 隐藏问题，例如：
   - `styleId`
   - `firstLineChars`
@@ -89,6 +90,7 @@ powershell -ExecutionPolicy Bypass -File scripts/export_word_pdf.ps1 -DocPath .\
 - `scripts/render_mermaid_figure.ps1`：渲染 Mermaid 图
 - `references/paper-format-workflow.md`：论文格式工作流
 - `references/failure-patterns-and-quality-gates.md`：高风险坑与质量门槛
+- `references/thesis-voice-and-style.md`：论文口吻与禁用元话语
 - `references/script-usage.md`：脚本使用说明
 
 ## 安装

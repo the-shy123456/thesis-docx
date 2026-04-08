@@ -60,6 +60,19 @@ behavior should therefore be:
    - Expand, polish, or reorganize thesis text only within the user's topic,
      evidence, codebase, notes, or source material.
    - Do not invent experimental data, system structure, entities, or results.
+   - Do not expose agent reasoning or data-feeding context inside the thesis
+     prose. Forbidden patterns include thesis-language such as:
+     - "根据已有工程"
+     - "根据现有代码"
+     - "将任务书和代码喂给模型后"
+     - "通过分析用户提供的代码"
+     - any wording that sounds like an AI workflow note instead of thesis prose
+   - Write in normal thesis voice, not in prompt-engineering voice, review
+     voice, or chain-of-thought voice.
+   - Prefer neutral academic narration that reads like student writing, e.g.
+     "本文设计并实现了……", "系统采用了……", "在该模块中……"
+   - Avoid first-order meta-explanations about how the text was generated,
+     inferred, or assembled.
 6. Generate figures only when the source material is sufficient.
    - Use Mermaid for architecture diagrams, E-R diagrams, flow charts, state
      diagrams, and similar thesis figures.
@@ -156,6 +169,28 @@ If page rendering cannot be verified, say so explicitly instead of implying the
 - Match the user's terminology unless it conflicts with the real materials.
 - Read `references/figure-and-code-rules.md` before generating diagrams.
 
+## Thesis Voice Rule
+
+Read `references/thesis-voice-and-style.md` before generating or rewriting
+body text. In particular:
+
+- thesis prose must sound like thesis prose, not like notes about how the AI
+  reasoned
+- student-facing academic narration is preferred over review-style meta
+  commentary
+- do not leak the existence of source-feeding, code-ingestion, or analysis
+  steps into the final paper text
+
+Before finalizing thesis prose, quickly self-check:
+
+1. Does the paragraph describe the system/research itself, rather than how the
+   assistant inferred it?
+2. Does the paragraph sound like thesis narration instead of prompt notes?
+3. Does the paragraph avoid phrases like "根据现有代码", "根据已有工程",
+   "通过分析用户提供的代码", or similar workflow-language?
+4. Would the sentence still make sense if the reader had no idea an AI helped
+   draft it?
+
 ## Code Listing Rules
 
 - Prefer LaTeX-oriented code presentation when the thesis includes code
@@ -183,6 +218,8 @@ If page rendering cannot be verified, say so explicitly instead of implying the
   - Read for the standard Word thesis formatting workflow.
 - `references/figure-and-code-rules.md`
   - Read before generating Mermaid figures or LaTeX code listings.
+- `references/thesis-voice-and-style.md`
+  - Read before generating or rewriting thesis prose.
 - `references/failure-patterns-and-quality-gates.md`
   - Read before large-scale formatting or before claiming the thesis is fully
     checked.

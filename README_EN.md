@@ -23,6 +23,7 @@ Its purpose is not merely bulk formatting. The intended workflow is:
 - fix TOC, page numbers, sections, cross-references, and caption numbering
 - generate Mermaid figures from real source material
 - prepare thesis-friendly code excerpts or pseudocode
+- keep thesis prose free of AI workflow meta-language
 - audit hidden OOXML issues such as:
   - `styleId`
   - `firstLineChars`
