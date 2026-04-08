@@ -1,4 +1,4 @@
-# thesis-docx
+# thesis-docx.skill
 
 [![License](https://img.shields.io/badge/license-MIT-16a34a)](./LICENSE)
 [![Word](https://img.shields.io/badge/Microsoft_Word-Recommended-185ABD)](#运行前提)
@@ -22,7 +22,7 @@
 - 统一正文、标题、图题注、表题注、参考文献等样式
 - 修复目录、页码、分节、交叉引用、图表编号
 - 生成基于真实材料的 Mermaid 图
-- 生成适合论文使用的代码片段或伪代码
+- 生成适合论文使用的代码片段或伪代码，LaTex排版
 - 控制论文口吻，避免把 AI 工作过程或元话语写进正文
 - 审计 OOXML 隐藏问题，例如：
   - `styleId`
@@ -90,7 +90,6 @@ powershell -ExecutionPolicy Bypass -File scripts/export_word_pdf.ps1 -DocPath .\
 - `scripts/render_mermaid_figure.ps1`：渲染 Mermaid 图
 - `references/paper-format-workflow.md`：论文格式工作流
 - `references/failure-patterns-and-quality-gates.md`：高风险坑与质量门槛
-- `references/thesis-voice-and-style.md`：论文口吻与禁用元话语
 - `references/script-usage.md`：脚本使用说明
 
 ## 安装
