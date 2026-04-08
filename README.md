@@ -106,3 +106,6 @@ git clone https://github.com/the-shy123456/thesis-docx.git
 ## License
 
 MIT
+## 社区
+
+- [LINUX DO 社区](https://linux.do)
