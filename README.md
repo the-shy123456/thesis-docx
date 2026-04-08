@@ -100,9 +100,15 @@ git clone https://github.com/the-shy123456/thesis-docx.git
 
 保持仓库目录完整即可，不需要拆文件。
 
-## Star 趋势
+## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=the-shy123456/thesis-docx&type=Date)](https://www.star-history.com/#the-shy123456/thesis-docx&Date)
+<a href="https://www.star-history.com/?repos=the-shy123456%2Fthesis-docx&type=timeline&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=the-shy123456/thesis-docx&type=timeline&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=the-shy123456/thesis-docx&type=timeline&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=the-shy123456/thesis-docx&type=timeline&legend=top-left" />
+ </picture>
+</a>
 
 ## License
 
