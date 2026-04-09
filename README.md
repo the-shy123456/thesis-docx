@@ -102,7 +102,7 @@ git clone https://github.com/the-shy123456/thesis-docx.git
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/chart?repos=the-shy123456/thesis-docx&type=timeline&legend=top-left)](https://www.star-history.com/?repos=the-shy123456%2Fthesis-docx&type=timeline&legend=top-left)
+<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://www.star-history.com/?repos=the-shy123456%2Fthesis-docx&type=timeline&legend=top-left" frameBorder="0"></iframe>
 
 ## License
 
